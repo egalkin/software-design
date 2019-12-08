@@ -1,7 +1,5 @@
 package event;
 
-import statistic.EventStatistic;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +16,17 @@ public class Event {
     }
 
     public void addTimestampToStatistic(Instant timestamp) {
-//        System.out.println(statistic.size());
         statistic.add(timestamp);
     }
 
     public List<Instant> getCallStatistic() {
         filterOutOutdatedRecords();
-        return this.statistic;
+        return List.copyOf(this.statistic);
     }
 
     private void filterOutOutdatedRecords() {
-        long filterBorder = System.currentTimeMillis() / 1000 - 3600;
-        this.statistic = this.statistic.stream().filter(record -> record.getEpochSecond() > filterBorder).collect(Collectors.toList());
+        Instant filterBorder = Instant.now().minusSeconds(3600);
+        this.statistic = this.statistic.stream().filter(record -> record.compareTo(filterBorder) > 0).collect(Collectors.toList());
 
     }
 

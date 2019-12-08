@@ -19,7 +19,6 @@ public class EventStatisticImpl implements EventStatistic {
         this.events = new HashMap<>();
     }
 
-
     public void incEvent(String name) {
         if (events.containsKey(name)) {
             events.get(name).addTimestampToStatistic(clock.now());

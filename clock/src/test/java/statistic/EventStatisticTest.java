@@ -51,4 +51,16 @@ public class EventStatisticTest  {
         }
         Assert.assertEquals(60, eventStatistic.getEventStatisticByName("FilterEvent").size());
     }
+
+    @Test
+    public void twoEventsTest() {
+        for (int i = 1; i <= 60; ++i) {
+            eventStatistic.incEvent(String.format("%sEvent", i % 2 == 0 ? "First" : "Second"));
+            now = now.plusSeconds(60);
+            clock.setNow(now);
+        }
+        Assert.assertEquals(2, eventStatistic.getAllEventStatistic().size());
+        Assert.assertEquals(30, eventStatistic.getEventStatisticByName("FirstEvent").size());
+        Assert.assertEquals(30, eventStatistic.getEventStatisticByName("SecondEvent").size());
+    }
 }
