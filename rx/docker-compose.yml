@@ -1,0 +1,23 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: reactive
+
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      MONGO_INITDB_DATABASE: reactive
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
